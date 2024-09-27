@@ -1,0 +1,8 @@
+package com.project.revshop.repository;
+
+import com.project.revshop.entity.UserModel;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<UserModel, Integer> {
+    // Custom query methods can be added here if needed
+}
