@@ -11,13 +11,13 @@ public class SellerModel {
     private Integer sellerId;
 
     private String businessName;
+
     private String businessAddress;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private UserModel usermodel;
 
-    // Constructors
     public SellerModel() {
     }
 
@@ -26,7 +26,6 @@ public class SellerModel {
         this.businessAddress = businessAddress;
     }
 
-    // Getters and Setters
     public Integer getSellerId() {
         return sellerId;
     }

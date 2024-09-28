@@ -1,6 +1,10 @@
 package com.project.revshop.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "userdetails")
@@ -9,22 +13,37 @@ public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
-
-    private String userName;
+    
+    @NotBlank(message = "userName is required")
+    private String userName; 
+    
+    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$", message = "Email must be valid")
+    @NotBlank(message = "Email is required.")
+    @Column(unique=true)
     private String userEmail;
+
+    @NotBlank(message = "Password is required.")
+    @Size(min = 8, message = "Password must be at least 8 characters.")
     private String userPassword;
+
+    @NotBlank(message = "Role is required.")
     private String userRole;
+
+    @NotBlank(message = "Address is required.")
     private String userAddress;
-    private Long userMobileNumber;
+
+    @NotNull(message = "Mobile number is required.")
+    @Pattern(regexp = "^(\\+\\d{1,3})?\\d{10}$", message = "Mobile number must be valid (e.g., +91XXXXXXXXXX or XXXXXXXXXX)")
+    @Column(unique=true)
+    private String  userMobileNumber;
 
     @OneToOne(mappedBy = "usermodel", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private SellerModel sellermodel;
 
-    // Constructors
     public UserModel() {
     }
 
-    public UserModel(String userName, String userEmail, String userPassword, String userRole, String userAddress, Long userMobileNumber) {
+    public UserModel(String userName, String userEmail, String userPassword, String userRole, String userAddress, String userMobileNumber) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
@@ -33,7 +52,6 @@ public class UserModel {
         this.userMobileNumber = userMobileNumber;
     }
 
-    // Getters and Setters
     public Integer getUserId() {
         return userId;
     }
@@ -82,11 +100,11 @@ public class UserModel {
         this.userAddress = userAddress;
     }
 
-    public Long getUserMobileNumber() {
+    public String getUserMobileNumber() {
         return userMobileNumber;
     }
 
-    public void setUserMobileNumber(Long userMobileNumber) {
+    public void setUserMobileNumber(String userMobileNumber) {
         this.userMobileNumber = userMobileNumber;
     }
 
