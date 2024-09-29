@@ -79,11 +79,12 @@ public class OTPController {
 		}
 	}
 	
-	@PostMapping("/update-password")
-	public void updatePassword(@RequestParam("password") String password, @RequestParam("confirmPassword") String confirmPassword,
-			@RequestParam("key") String key) {
-		System.out.println(password + " " + confirmPassword);
+//	@PostMapping("/update-password")
+//	public String updatePassword(@RequestParam("password") String password, @RequestParam("confirmPassword") String confirmPassword,
+//			@RequestParam("key") String key) {
+//		System.out.println(password + " " + confirmPassword + " " + key);
 //		userService.updatePassword(password, confirmPassword, key)
-	}
+//		return "login";
+//	}
 		
 }
