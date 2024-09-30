@@ -81,10 +81,6 @@ body {
     color: #d1d1d1;
 }
 
-a:hover {
-    color: #ffda6b;
-    text-decoration: none;
-}
 .error {
     color: red;
     font-size: 0.875rem;

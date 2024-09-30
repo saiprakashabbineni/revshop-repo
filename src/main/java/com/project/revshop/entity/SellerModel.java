@@ -57,4 +57,10 @@ public class SellerModel {
     public void setUsermodel(UserModel usermodel) {
         this.usermodel = usermodel;
     }
+ 
+    @Override    
+    public String toString() {
+		return "SellerModel[sellerId = "  + sellerId + " , businessname : " + businessName + "]";
+    	
+    }
 }

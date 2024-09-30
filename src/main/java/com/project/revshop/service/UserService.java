@@ -19,9 +19,16 @@ public class UserService {
         return userRepository.save(user);
     }
     
-    public SellerModel saveSeller(SellerModel sellermodel) {
-    	
-    	return sellerRepository.save(sellermodel);
-    	
+    public SellerModel saveSeller(SellerModel sellermodel) {    	
+    	return sellerRepository.save(sellermodel);   	
     }
+    
+    public UserModel validateLogin(String userEmail , String userPassword) {    	
+    	return userRepository.findByUserEmailAndUserPassword(userEmail, userPassword);	    	
+    }
+    
+    
+    public SellerModel getSellerId(Integer userID) {
+		return sellerRepository.findByUsermodelUserId(userID);
+	}
 }

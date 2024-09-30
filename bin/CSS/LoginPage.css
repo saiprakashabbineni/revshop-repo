@@ -7,99 +7,91 @@ body {
     background-size: cover;
     background-position: center;
     font-family: 'Arial', sans-serif;
-    background-attachment: fixed;
-    overflow: auto;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
 }
-
-.registration-container {
-    background-color: rgba(0, 0, 0, 0.75);
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+.login-container {
+    background-color: rgba(0, 0, 0, 0.8);
     color: #fff;
     padding: 2rem;
     border-radius: 15px;
     width: 100%;
     max-width: 600px;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    transform: translateY(20px);
-    animation: fadeIn 0.8s forwards;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    transition: all 0.5s ease;
 }
-.form-control option {
-    color:black;
-
+.login-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
 }
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.registration-container h2 {
+.login-container h2 {
     text-align: center;
     margin-bottom: 1.5rem;
     font-weight: 700;
     color: #ffbf00;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
 }
-
 .form-group label {
     font-weight: 500;
+    color: #ffbf00;
     margin-left: 8px;
-    color:#ffbf00;
 }
-
 .form-control {
     border-radius: 1.6rem !important;
     background-color: rgba(255, 255, 255, 0.1) !important;
     color: #fff !important;
-
+    border: none;
+    padding: 0.75rem;
 }
 
+/* .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+} */
+.btn-container {
+    display: flex;
+    justify-content: center;
+}
 .btn-custom {
-    display: block;
-    margin: 0 auto;
     background-color: #ffbf00;
     color: black;
     font-weight: 600;
-    border-radius: 0.25rem;
-    transition: background-color 0.3s, transform 0.3s;
     border-radius: 30px;
+    width: 150px; /* You can adjust the button width as needed */
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
-
 .btn-custom:hover {
-    background-color: rgb(202, 202, 202);
+    background-color: #e6ac00;
     transform: scale(1.05);
 }
-
 .login-link {
     display: block;
     text-align: center;
     margin-top: 1rem;
-    color: #d1d1d1;
-}
-
-a:hover {
-    color: #ffda6b;
-    text-decoration: none;
+    color: #ffbf00;
 }
 .error {
     color: red;
     font-size: 0.875rem;
 }
-
 @media (max-width: 768px) {
-    .registration-container {
+    .login-container {
         padding: 1.5rem;
     }
-
-    .registration-container h2 {
+    .login-container h2 {
         font-size: 1.5rem;
     }
-
-    .optionclass:hover  {
-        background-color: rgba(60, 8, 104, 0.973) !important; /* Light orange background on hover */
+}
+@media (max-width: 576px) {
+    .login-container {
+        padding: 1rem;
+    }
+    .login-container h2 {
+        font-size: 1.25rem;
+    }
+    .btn-custom {
+        width: 100%; /* Full width for buttons on smaller devices */
     }
 }

@@ -100,7 +100,7 @@ public class UserModel {
         this.userAddress = userAddress;
     }
 
-    public String getUserMobileNumber() {
+	public String getUserMobileNumber() {
         return userMobileNumber;
     }
 
@@ -115,4 +115,11 @@ public class UserModel {
     public void setSellermodel(SellerModel sellermodel) {
         this.sellermodel = sellermodel;
     }
+    
+    @Override
+ 	public String toString() {
+ 		return "UserModel [userId=" + userId + ", userName=" + userName + ", userEmail=" + userEmail + ", userPassword="
+ 				+ userPassword + ", userRole=" + userRole + ", userAddress=" + userAddress + ", userMobileNumber="
+ 				+ userMobileNumber + ", sellermodel=" + sellermodel + "]";
+ 	}
 }
