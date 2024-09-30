@@ -1,4 +1,4 @@
-package com.project.revshop.model;
+package com.project.revshop.entity;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 

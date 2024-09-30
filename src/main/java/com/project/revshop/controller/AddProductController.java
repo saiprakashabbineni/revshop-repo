@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.project.revshop.model.Category;
-import com.project.revshop.model.Product;
-import com.project.revshop.model.Size;
+import com.project.revshop.entity.Category;
+import com.project.revshop.entity.Product;
+import com.project.revshop.entity.Size;
 import com.project.revshop.service.ProductService;
 
 @Controller

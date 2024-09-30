@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.project.revshop.model.Category;
-import com.project.revshop.model.Size;
+import com.project.revshop.entity.Category;
+import com.project.revshop.entity.Size;
 
 @Repository
 public interface SizeRepository extends JpaRepository<Size, Integer> {

@@ -31,4 +31,10 @@ public class UserService {
     public SellerModel getSellerId(Integer userID) {
 		return sellerRepository.findByUsermodelUserId(userID);
 	}
+
+	public void updatePassword(String password, String key) {
+		UserModel userModel = userRepository.findByUserEmail(key);
+		userModel.setUserPassword(password);
+		userRepository.save(userModel);
+	}
 }

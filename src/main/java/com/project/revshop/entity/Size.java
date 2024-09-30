@@ -1,4 +1,4 @@
-package com.project.revshop.model;
+package com.project.revshop.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;

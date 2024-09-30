@@ -3,9 +3,9 @@ package com.project.revshop.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.revshop.model.Category;
-import com.project.revshop.model.Product;
-import com.project.revshop.model.Size;
+import com.project.revshop.entity.Category;
+import com.project.revshop.entity.Product;
+import com.project.revshop.entity.Size;
 import com.project.revshop.repository.CategoryRepository;
 import com.project.revshop.repository.ProductRepository;
 import com.project.revshop.repository.SizeRepository;

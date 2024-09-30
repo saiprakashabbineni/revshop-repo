@@ -40,7 +40,7 @@ public class LoginController {
 			System.out.println("Login successful! Welcome, " + user.getUserEmail());
 
 			if ("buyer".equals(user.getUserRole())) {
-				return "buyerDashboard";	
+				return "redirect:/api/v1/products";	
 			} else {
 				SellerModel seller = userservice.getSellerId(fetcheduserId);
 				if (seller != null) {
@@ -48,7 +48,7 @@ public class LoginController {
 					session.setAttribute("sellerid", sellerId);
 
 					System.out.println("Seller ID: " + sellerId);
-					return "sellerDashboard";
+					return "redirect:/api/v1/seller";
 
 				} else {
 					System.out.println("No seller found for user ID: " + fetcheduserId);

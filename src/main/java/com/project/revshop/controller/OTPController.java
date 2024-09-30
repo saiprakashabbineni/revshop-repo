@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.revshop.entity.LoginModel;
 import com.project.revshop.service.EmailService;
 import com.project.revshop.service.OTPService;
+import com.project.revshop.service.UserService;
 
 import jakarta.mail.MessagingException;
 
@@ -25,8 +27,8 @@ public class OTPController {
 	@Autowired
 	private EmailService emailService;
 	
-//	@Autowired
-//	private UserService userService;
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping("/forgot-password")
 	public String showForgotPassword() {
@@ -79,12 +81,13 @@ public class OTPController {
 		}
 	}
 	
-//	@PostMapping("/update-password")
-//	public String updatePassword(@RequestParam("password") String password, @RequestParam("confirmPassword") String confirmPassword,
-//			@RequestParam("key") String key) {
-//		System.out.println(password + " " + confirmPassword + " " + key);
-//		userService.updatePassword(password, confirmPassword, key)
-//		return "login";
-//	}
+	@PostMapping("/update-password")
+	public String updatePassword(@RequestParam("password") String password, @RequestParam("confirmPassword") String confirmPassword,
+			@RequestParam("key") String key, Model model) {
+		System.out.println(password + " " + confirmPassword + " " + key);
+		userService.updatePassword(password, key);
+		model.addAttribute("login", new LoginModel());
+		return "Login";
+	}
 		
 }
