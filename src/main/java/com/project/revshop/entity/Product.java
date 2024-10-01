@@ -38,8 +38,6 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "size_id",nullable = false)
     private Size size;
-    
-    
 
 	@Column(name = "name", nullable = false, length = 150)
     private String name;
@@ -179,5 +177,13 @@ public class Product {
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
+    
+	@Override
+	public String toString() {
+		return "Product [productId=" + productId + ", category=" + category + ", size=" + size + ", name=" + name
+				+ ", gender=" + gender + ", description=" + description + ", imageUrl=" + imageUrl + ", price=" + price
+				+ ", discountPrice=" + discountPrice + ", quantityAvailable=" + quantityAvailable
+				+ ", thresholdQuantity=" + thresholdQuantity + ", createdAt=" + createdAt + "]";
+	}
     
 }

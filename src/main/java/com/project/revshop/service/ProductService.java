@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.project.revshop.entity.Category;
 import com.project.revshop.entity.Product;
 import com.project.revshop.entity.Size;
+import com.project.revshop.enums.Gender;
 import com.project.revshop.repository.CategoryRepository;
 import com.project.revshop.repository.ProductRepository;
 import com.project.revshop.repository.SizeRepository;
@@ -61,6 +62,21 @@ public class ProductService {
 		// TODO Auto-generated method stub
 		productRepository.deleteById(productId);
 	}
+	
+	public List<Product> getAllProducts(){
+		return productRepository.findAll();
+	}
+
+
+
+	    public List<Product> getProductsByGenderInAndPriceBetween(List<Gender> genders, double minPrice, double maxPrice) {
+	        return productRepository.findByGenderInAndPriceBetween(genders, minPrice, maxPrice);
+	    }
+	    
+	    public List<Product> getProductsByPriceBetween(double minPrice, double maxPrice){
+	    	
+	    	return productRepository.findByPriceBetween(minPrice, maxPrice);
+	    }
 	
 }
 
