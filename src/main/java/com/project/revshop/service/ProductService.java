@@ -3,6 +3,7 @@ package com.project.revshop.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.revshop.controller.ViewProductsController;
 import com.project.revshop.entity.Category;
 import com.project.revshop.entity.Product;
 import com.project.revshop.entity.Review;
@@ -61,6 +62,14 @@ public class ProductService {
 	public void deleteProduct(int productId) {
 		// TODO Auto-generated method stub
 		productRepository.deleteById(productId);
+	}
+	public List<Product> getAllProducts() {
+		return productRepository.findAll();
+	}
+
+	public Product getProductById(int productId) {
+		// TODO Auto-generated method stub
+		return productRepository.findById(productId).get();	
 	}
 	
 	public Product findById(int id) {
