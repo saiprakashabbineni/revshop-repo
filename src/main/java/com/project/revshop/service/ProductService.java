@@ -3,6 +3,7 @@ package com.project.revshop.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.revshop.controller.ViewProductsController;
 import com.project.revshop.entity.Category;
 import com.project.revshop.entity.Product;
 import com.project.revshop.entity.Size;
@@ -62,12 +63,15 @@ public class ProductService {
 		// TODO Auto-generated method stub
 		productRepository.deleteById(productId);
 	}
-	
-	public List<Product> getAllProducts(){
+	public List<Product> getAllProducts() {
 		return productRepository.findAll();
 	}
 
-
+	public Product getProductById(int productId) {
+		// TODO Auto-generated method stub
+		return productRepository.findById(productId).get();	
+	}
+	
 
 	    public List<Product> getProductsByGenderInAndPriceBetween(List<Gender> genders, double minPrice, double maxPrice) {
 	        return productRepository.findByGenderInAndPriceBetween(genders, minPrice, maxPrice);

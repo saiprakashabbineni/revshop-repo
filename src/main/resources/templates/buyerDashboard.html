@@ -81,7 +81,12 @@
     </section>
     <section id="sellers">
         <div class="seller container">
-            <h2>Top Sales</h2>
+        <div class="d-flex justify-content-between align-items-baseline">
+            <h2>Top Sales</h2>       
+		    <a class="text-right" th:href="@{/api/v1/products}">
+		        <button class="view-all-btn">View all products</button>
+		    </a>
+        </div>
             <div class="best-seller">
                 <div class="best-p1">
                     <img src="https://4.imimg.com/data4/RU/VC/MY-11853389/men-s-jackets-500x500.jpg" alt="img" class="rounded-image">
