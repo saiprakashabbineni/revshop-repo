@@ -37,4 +37,9 @@ public class UserService {
 		userModel.setUserPassword(password);
 		userRepository.save(userModel);
 	}
+
+	public UserModel getUserId(int userId) {
+		// TODO Auto-generated method stub
+		return userRepository.findByUserId(userId);
+	}
 }
