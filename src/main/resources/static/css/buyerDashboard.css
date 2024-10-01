@@ -3,24 +3,24 @@
 
 .view-products {
     display: flex;
-    justify-content: flex-end; /* Align the button to the right */
+    justify-content: flex-end;
     margin-bottom: 20px;
 }
 
 .view-all-btn {
-    background-color: #4CAF50; /* Green background */
-    color: white; /* White text */
-    padding: 10px 20px; /* Add some padding */
-    border: none; /* Remove default border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 16px; /* Font size */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    transition: background-color 0.3s ease; /* Smooth transition */
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-size: 16px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease; 
 }
 
 .view-all-btn:hover {
-    background-color: #45a049; /* Darker green on hover */
+    background-color: #45a049; 
 }
 
 
@@ -30,7 +30,7 @@
     box-sizing: border-box;
 }
 
-body {
+#body {
     font-family: "Poppins", sans-serif;
     background-color: #fcecff !important;
 }
@@ -41,11 +41,7 @@ body {
     margin: 0 auto;
 }
 
-
-/* //........top text ........// */
-
 :root {
-    /* //....... Color ........// */
     --primary-color: #ff3c78;
     --light-black: rgba(0, 0, 0, 0.89);
     --black: #000;
@@ -53,8 +49,6 @@ body {
     --grey: #aaa;
 }
 
-
-/* //........top text ........// */
 
 .top-txt {
     background-color: var(--black);
@@ -73,9 +67,6 @@ body {
     color: rgba(255, 255, 255, 0.945);
     margin: 0 10px;
 }
-
-
-/* //........ Navbar ........// */
 
 .navbar input[type="checkbox"],
 .navbar .hamburger-lines {
@@ -1307,9 +1298,6 @@ iframe {
     }
 }
 
-
-/* //....... Media Queries For Contact .......// */
-
 @media (max-width: 500px) {
     .form {
         display: flex;
@@ -1355,11 +1343,11 @@ iframe {
 }
 
 .rounded-image {
-    border-radius: 15px; /* Adjust this value to make the corners more or less rounded */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a soft shadow for a nicer effect */
-    transition: all 0.3s ease; /* Optional: Smooth transition effect when hovering */
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+    transition: all 0.3s ease; 
 }
 
 .rounded-image:hover {
-    transform: scale(1.05); /* Optional: Slight zoom-in effect on hover */
+    transform: scale(1.05); 
 }
