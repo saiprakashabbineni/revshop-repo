@@ -40,7 +40,7 @@ public class LoginController {
 			System.out.println("Login successful! Welcome, " + user.getUserEmail());
 
 			if ("buyer".equals(user.getUserRole())) {
-				return "redirect:/api/v1/products";	
+				return "redirect:/api/v1/buyer-dashboard";	
 			} else {
 				SellerModel seller = userservice.getSellerId(fetcheduserId);
 				if (seller != null) {
