@@ -1,11 +1,13 @@
 package com.project.revshop.entity;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.hibernate.annotations.Generated;
 
 import com.project.revshop.enums.Gender;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -15,6 +17,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -180,4 +183,16 @@ public class Product {
         this.createdAt = createdAt;
     }
     
+    @OneToMany(mappedBy = "product", cascade=CascadeType.ALL)
+    private List<Review> reviews;
+
+
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
 }

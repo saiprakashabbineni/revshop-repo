@@ -1,4 +1,4 @@
-package com.project.revshop.model;
+package com.project.revshop.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,11 +18,12 @@ public class Review {
 	private int id;
 	
 	private String reviewContent;
+
+	@ManyToOne
+	@JoinColumn(name = "product")
+	private Product product;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "product")
-//	@Column(name = "product_id")
-//	private Product product;
+	private int rating;
 
 	public int getId() {
 		return id;
@@ -40,11 +41,19 @@ public class Review {
 		this.reviewContent = reviewContent;
 	}
 	
-//	public Product getProduct() {
-//		return product;
-//	}
-//	
-//	public void setProduct(Product product) {
-//		this.product = product;
-//	}
+	public Product getProduct() {
+		return product;
+	}
+	
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
 }
