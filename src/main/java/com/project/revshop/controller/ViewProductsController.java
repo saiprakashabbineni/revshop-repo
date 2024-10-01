@@ -19,7 +19,7 @@ public class ViewProductsController {
 	
 	@Autowired
 	private ProductService productService;
-	
+		
 	@GetMapping("/api/v1/buyer-dashboard")
 	public String viewDashboard() {
 		return "buyerDashboard";
@@ -36,6 +36,9 @@ public class ViewProductsController {
 	public String viewProductsById(@PathVariable("id") int productId, Model model) {
 		Product products = productService.getProductById(productId);
         model.addAttribute("product", products);
+        double averageRating = productService.getRating(productId);
+        System.out.println(averageRating);
+        model.addAttribute("averageRating", averageRating);
 //     	model.addAttribute("selectedProduct", products);  
         return "ProductDetails"; 
 	}	

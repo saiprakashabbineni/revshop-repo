@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.project.revshop.controller.ViewProductsController;
 import com.project.revshop.entity.Category;
 import com.project.revshop.entity.Product;
+import com.project.revshop.entity.Review;
 import com.project.revshop.entity.Size;
 import com.project.revshop.repository.CategoryRepository;
 import com.project.revshop.repository.ProductRepository;
@@ -69,6 +70,33 @@ public class ProductService {
 	public Product getProductById(int productId) {
 		// TODO Auto-generated method stub
 		return productRepository.findById(productId).get();	
+	}
+	
+	public Product findById(int id) {
+		Optional<Product> product = productRepository.findById(id);
+		if(product.isPresent()) {
+			return product.get();
+		}
+		else {
+			return null;
+		}	
+	}
+	
+	public double getRating(int id) {
+		Optional<Product> product = productRepository.findById(id);
+		if(product.isPresent()) {
+			List<Review> reviews = product.get().getReviews();
+			int total = 0;
+			int count = 0;
+			for(Review review : reviews) {
+				total += review.getRating();
+				count++;
+			}
+			return total/count;
+		}
+		else {
+			return 0;
+		}	
 	}
 	
 }
