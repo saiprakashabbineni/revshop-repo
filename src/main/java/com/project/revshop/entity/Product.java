@@ -30,9 +30,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productId;
     
-//    @ManyToOne
-//    @JoinColumn(name = "seller_id", nullable = false)
-//    private Seller seller;
+    @ManyToOne
+    @JoinColumn(name = "seller_id", nullable = false)
+    private SellerModel sellerModel;
     
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
@@ -88,15 +88,15 @@ public class Product {
         this.productId = productId;
     }
 
-//    public Seller getSeller() {
-//        return seller;
-//    }
-//
-//    public void setSeller(Seller seller) {
-//        this.seller = seller;
-//    }
+    public SellerModel getSellerModel() {
+		return sellerModel;
+	}
 
-    public Category getCategory() {
+	public void setSellerModel(SellerModel sellerModel) {
+		this.sellerModel = sellerModel;
+	}
+
+	public Category getCategory() {
         return category;
     }
 

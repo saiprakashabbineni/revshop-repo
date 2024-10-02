@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SellerRepository extends JpaRepository<SellerModel, Integer> {
 	SellerModel findByUsermodelUserId(Integer userId);
+	
 }

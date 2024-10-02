@@ -7,9 +7,11 @@ import com.project.revshop.controller.ViewProductsController;
 import com.project.revshop.entity.Category;
 import com.project.revshop.entity.Product;
 import com.project.revshop.entity.Review;
+import com.project.revshop.entity.SellerModel;
 import com.project.revshop.entity.Size;
 import com.project.revshop.repository.CategoryRepository;
 import com.project.revshop.repository.ProductRepository;
+import com.project.revshop.repository.SellerRepository;
 import com.project.revshop.repository.SizeRepository;
 
 import java.util.List;
@@ -26,14 +28,13 @@ public class ProductService {
     
     @Autowired
     private SizeRepository sizeRepository;
+    @Autowired
+    private SellerRepository sellerRepository;
     
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
     
-//    public List<Size> getSizesByCategory(Optional<Category> category) {
-//        return sizeRepository.findByCategory(category);
-//    }
     
     public void saveProduct(Product product) {
         productRepository.save(product);
@@ -97,6 +98,11 @@ public class ProductService {
 		else {
 			return 0;
 		}	
+	}
+
+	public SellerModel getSellerById(int sellerid) {
+		// TODO Auto-generated method stub
+		return sellerRepository.findById(sellerid).get();
 	}
 	
 }

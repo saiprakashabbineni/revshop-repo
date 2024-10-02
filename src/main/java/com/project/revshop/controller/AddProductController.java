@@ -20,8 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.revshop.entity.Category;
 import com.project.revshop.entity.Product;
+import com.project.revshop.entity.SellerModel;
 import com.project.revshop.entity.Size;
+import com.project.revshop.entity.UserModel;
 import com.project.revshop.service.ProductService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/api/v1")
@@ -55,23 +59,37 @@ public class AddProductController {
 	}
 	
 	@PostMapping("/update")
-	public String updateProductToInventory(@ModelAttribute Product product,Model model,@RequestParam("productId") int productId) {
+	public String updateProductToInventory(@ModelAttribute Product product,Model model,@RequestParam("productId") int productId,HttpSession session) {
 		product.setProductId(productId);
+		int sellerid = (Integer) session.getAttribute("sellerid");
+		SellerModel sellerModel = productService.getSellerById(sellerid);
+		product.setSellerModel(sellerModel);
 		productService.saveProduct(product);
-		return "displayProducts";
+		return "redirect:/api/v1/products";
 	}
 	
 	@PostMapping("/add")
-	public String addProductToInventory(@ModelAttribute Product product, Model model,@RequestParam("size") int sizeId ) {
+	public String addProductToInventory(@ModelAttribute Product product, Model model,@RequestParam("size") int sizeId,HttpSession session ) {
 		Size size = productService.getSizeById(sizeId);
 		product.setSize(size);
+		int sellerid = (Integer) session.getAttribute("sellerid");
+		SellerModel sellerModel = productService.getSellerById(sellerid);
+        if (sellerModel == null) {
+            return "redirect:/api/v1/login";
+        }
+		product.setSellerModel(sellerModel);
 		productService.saveProduct(product);
-		return "displayProducts";
+		return "redirect:/api/v1/products";
 	}
 	
-//	@DeleteMapping("/delete")
-//	public String deleteProuctFromInventory(@RequestParam("productId") int productId) {
-//		productService.deleteProduct(productId);
-//		return "addProductsToInventory";
-//	}
+	@DeleteMapping("/delete")
+	public String deleteProuctFromInventory(@RequestParam("productId") int productId,HttpSession session) {
+//		int sellerid = (Integer) session.getAttribute("sellerid");
+//		SellerModel sellerModel = productService.getSellerById(sellerid);
+//        if (sellerModel == null) {
+//            return "redirect:/api/v1/login";
+//        }
+		productService.deleteProduct(productId);
+		return "redirect:/api/v1/products";
+	}
 }
