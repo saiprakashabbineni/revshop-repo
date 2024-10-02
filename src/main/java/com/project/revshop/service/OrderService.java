@@ -71,4 +71,9 @@ public class OrderService {
 		// TODO Auto-generated method stub
 		return orderItemRepository.findByOrder(order);
 	}
+
+	public List<Order> getOrdersForSeller() {
+		// TODO Auto-generated method stub
+		return orderRepository.findAll();
+	}
 }

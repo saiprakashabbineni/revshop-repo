@@ -84,11 +84,11 @@ public class AddProductController {
 	
 	@DeleteMapping("/delete")
 	public String deleteProuctFromInventory(@RequestParam("productId") int productId,HttpSession session) {
-//		int sellerid = (Integer) session.getAttribute("sellerid");
-//		SellerModel sellerModel = productService.getSellerById(sellerid);
-//        if (sellerModel == null) {
-//            return "redirect:/api/v1/login";
-//        }
+		int sellerid = (Integer) session.getAttribute("sellerid");
+		SellerModel sellerModel = productService.getSellerById(sellerid);
+        if (sellerModel == null) {
+            return "redirect:/api/v1/login";
+        }
 		productService.deleteProduct(productId);
 		return "redirect:/api/v1/products";
 	}

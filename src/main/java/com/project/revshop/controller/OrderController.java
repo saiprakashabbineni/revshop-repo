@@ -2,6 +2,7 @@ package com.project.revshop.controller;
 
 import com.project.revshop.entity.Order;
 import com.project.revshop.entity.OrderItem;
+import com.project.revshop.entity.SellerModel;
 import com.project.revshop.entity.Cart;
 import com.project.revshop.entity.UserModel;
 import com.project.revshop.service.CartService;
@@ -79,5 +80,18 @@ public class OrderController {
         List<Order> orders = orderService.getOrdersByUser(user);
         model.addAttribute("orders", orders);
         return "orderHistory";
+    }
+    
+    @GetMapping("/orderHistory")
+    public String orderHistoryBySeller(HttpSession session, Model model) {
+    	int sellerid = (Integer) session.getAttribute("sellerid");
+		SellerModel sellerModel = userService.getSellerId(sellerid);
+        if (sellerModel == null) {
+            return "redirect:/api/v1/login";
+        }
+
+        List<Order> orders = orderService.getOrdersForSeller();
+        model.addAttribute("orders", orders);
+        return "orderHistoryForSeller";
     }
 }
