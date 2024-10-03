@@ -41,3 +41,4 @@ public class WishlistController {
         return "redirect:/api/v1/wishlist";
     }
 }
+

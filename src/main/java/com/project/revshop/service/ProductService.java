@@ -82,22 +82,22 @@ public class ProductService {
 		}	
 	}
 	
-	public double getRating(int id) {
-		Optional<Product> product = productRepository.findById(id);
-		if(product.isPresent()) {
-			List<Review> reviews = product.get().getReviews();
-			int total = 0;
-			int count = 0;
-			for(Review review : reviews) {
-				total += review.getRating();
-				count++;
-			}
-			return total/count;
-		}
-		else {
-			return 0;
-		}	
-	}
+//	public double getRating(int id) {
+//		Optional<Product> product = productRepository.findById(id);
+//		if(product.isPresent()) {
+//			List<Review> reviews = product.get().getReviews();
+//			int total = 0;
+//			int count = 0;
+//			for(Review review : reviews) {
+//				total += review.getRating();
+//				count++;
+//			}
+//			return total/count;
+//		}
+//		else {
+//			return 0;
+//		}	
+//	}
 	
 }
 

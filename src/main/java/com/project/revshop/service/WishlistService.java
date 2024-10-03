@@ -1,5 +1,3 @@
-package com.project.revshop.service;
-
 import com.project.revshop.entity.Product;
 import com.project.revshop.entity.Wishlist;
 import com.project.revshop.repository.ProductRepository;
