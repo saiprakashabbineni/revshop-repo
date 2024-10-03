@@ -1,22 +1,22 @@
-package com.project.revshop.service;
-
-import com.project.revshop.entity.Product;
-import com.project.revshop.entity.Wishlist;
-import com.project.revshop.repository.ProductRepository;
-import com.project.revshop.repository.UserRepository;
+//package com.project.revshop.service;
+//
+//import com.project.revshop.entity.Product;
+//import com.project.revshop.entity.Wishlist;
+//import com.project.revshop.repository.ProductRepository;
+//import com.project.revshop.repository.UserRepository;
 //import com.project.revshop.repository.WishlistRepository;
-import jakarta.transaction.Transactional;
-
-import org.apache.catalina.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.Set;
-import java.util.stream.Collectors;
-
+//import jakarta.transaction.Transactional;
+//
+//import org.apache.catalina.User;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Service;
+//
+//import java.util.Set;
+//import java.util.stream.Collectors;
+//
 //@Service
 //@Transactional
-public class WishlistService {
+//public class WishlistService {
 //
 //    @Autowired
 //    private WishlistRepository wishlistRepository;
@@ -53,4 +53,5 @@ public class WishlistService {
 //                .map(Wishlist::getProduct)
 //                .collect(Collectors.toSet());
 //    }
-}
+// }
+

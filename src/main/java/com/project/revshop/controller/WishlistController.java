@@ -1,13 +1,13 @@
 package com.project.revshop.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.web.bind.annotation.*;
+//
 //import com.project.revshop.repository.WishlistRepository;
 
 //@RestController
 //@RequestMapping("/api/v1/wishlist")
-public class WishlistController {
+//public class WishlistController {
 //
 //    @Autowired
 //    private WishlistRepository wishlistService;
@@ -23,4 +23,5 @@ public class WishlistController {
 //        wishlistService.removeFromWishlist(userId, productId);
 //        return "wishlist";
 //    }
-}
+//}
+
