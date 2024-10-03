@@ -76,4 +76,10 @@ public class OrderService {
 		// TODO Auto-generated method stub
 		return orderRepository.findAll();
 	}
+
+	public Order getOrderById(int id) {
+		// TODO Auto-generated method stub
+		return orderRepository.findById(id).get();
+	}
+	
 }

@@ -94,4 +94,12 @@ public class OrderController {
         model.addAttribute("orders", orders);
         return "orderHistoryForSeller";
     }
+    
+    @GetMapping("/details")
+    public String orderDetails(@RequestParam("orderId") int orderId, Model model) {
+    	Order order = orderService.getOrderById(orderId);
+    	List<OrderItem> orderItems = orderService.getOrderItemsByOrder(order);
+    	model.addAttribute("orderItems", orderItems);
+    	return "orderDetails";
+    }
 }

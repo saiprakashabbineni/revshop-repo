@@ -57,6 +57,7 @@
                           <div class="action-buttons mt-3">
                           	<form th:action="@{/api/v1/cart}" method="post">
 	                            <input type="hidden" th:name ="productId" th:value="${product.productId}">
+	                            <input type="hidden" th:name ="quantity" th:value="${1}">
 	                            <button type="submit" class="btn btn-primary">Add to Cart</button>
                             </form>
                             <form th:method="post" th:action="@{/api/v1/wishlist}">

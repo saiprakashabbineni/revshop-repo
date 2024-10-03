@@ -38,7 +38,7 @@ public class ReviewController {
 		if(product != null) {
 			review.setProduct(product);
 			reviewService.addReview(review);
-			return "redirect:/api/v1/buyer-dashboard";			
+			return "redirect:/api/v1/orders/history";			
 		}
 		return "notfound";
 	}
