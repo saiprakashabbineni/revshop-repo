@@ -14,10 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface CartRepository extends JpaRepository<Cart, Integer> {
 
 	List<Cart> findByUserModel(UserModel userModel);
-
 	Optional<Cart> findByUserModelAndProduct(UserModel user, Product product);
-
-	void deleteByUserModel(UserModel user);
-
-
+  void deleteByUserModel(UserModel user);
+	Cart findByUserModelUserIdAndProductProductId(Integer userId, Integer productId);
 }

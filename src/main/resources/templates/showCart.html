@@ -1,58 +1,105 @@
-	<!DOCTYPE html>
-	<html xmlns:th="http://www.thymeleaf.org">
-	<head>
-	    <title>Shopping Cart</title>
-	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-	    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-	    <link rel="stylesheet" th:href="@{/css/showCart.css}">
-	</head>
-	<body>
-	    <div class="container cart-container">
-	        <div class="cart-header">
-	            <h1>Your Shopping Cart</h1>
-	            <i class="fas fa-shopping-cart cart-icon"></i>
-	        </div>
-	
-	        <div th:if="${not #lists.isEmpty(cartItems)}">
-	            <table class="cart-table">
-	                <thead>
-	                    <tr>
-	                        <th>Product</th>
-	                        <th>Price</th>
-	                        <th>Quantity</th>
-	                        <th>Total</th>
-	                    </tr>
-	                </thead>
-	                <tbody>
-	                    <tr class="cart-item" th:each="item : ${cartItems}">
-	                        <td data-label="Product" class="product-name" th:text="${item.product.name}"></td>
-	                        <td data-label="Price" class="price">$<span th:text="${#numbers.formatDecimal(item.product.discountPrice, 1, 2)}"></span></td>
-	                        <td data-label="Quantity" class="quantity" th:text="${item.quantity}"></td>
-	                        <td data-label="Total" class="total">$<span th:text="${#numbers.formatDecimal(item.product.discountPrice * item.quantity, 1, 2)}"></span></td>
-	                    </tr>
-	                </tbody>
-	            </table>
-	        </div>
-	
-	        <div th:if="${#lists.isEmpty(cartItems)}" class="empty-cart">
-	            <i class="fas fa-shopping-basket"></i>
-	            <h2>Your cart is empty</h2>
-	            <p>Looks like you haven't added any items to your cart yet.</p>
-	        </div>
-	
-	        <div class="cart-actions">
-	            <a href="/displayProduct" class="btn btn-continue">
-	                <i class="fas fa-arrow-left"></i>
-	                Continue Shopping
-	            </a>
-	            <a th:href="@{/api/v1/orders}" class="btn btn-checkout">
-	                Proceed to Checkout
-	                <i class="fas fa-arrow-right"></i>
-	            </a>
-	        </div>
-	    </div>
-	
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-	</body>
-	</html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Shopping Cart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/showCart.css}">
+</head>
+<body>
+	<div th:include="@{/buyerNav.html}"></div>
+    <div class="container cart-container">
+        <div class="cart-header">
+            <h1>Your Shopping Cart</h1>
+            <i class="fas fa-shopping-cart cart-icon"></i>
+        </div>
+
+        <div th:if="${not #lists.isEmpty(cartItems)}">
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="cart-item" th:each="item : ${cartItems}">
+                        <td data-label="Product" class="product-name" th:text="${item.product.name}"></td>
+                        <td data-label="Price" class="price">$<span th:text="${#numbers.formatDecimal(item.product.discountPrice, 1, 2)}"></span></td>	                      
+                        <td>
+                        	<button th:onclick="'increment(' + ${item.product.productId} + ',' + ${item.quantity} + ')'" class="btn btn-sm btn-outline-success">+</button>
+	                        <span data-label="Quantity" class="quantity" th:text="${item.quantity}"></span>
+							<button th:onclick="'decrement(' + ${item.product.productId} + ',' + ${item.quantity} + ')'" class="btn btn-sm btn-outline-success">-</button>                        
+                        </td>
+  	                        <td data-label="Total" class="total">$<span th:text="${#numbers.formatDecimal(item.product.discountPrice * item.quantity, 1, 2)}"></span></td>
+  	                        <td><button th:onclick="'remove(' + ${item.product.productId} + ')'" class="btn btn-outline-success">Delete</button></td>
+  	                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${#lists.isEmpty(cartItems)}" class="empty-cart">
+            <i class="fas fa-shopping-basket"></i>
+            <h2>Your cart is empty</h2>
+            <p>Looks like you haven't added any items to your cart yet.</p>
+        </div>
+
+        <div class="cart-actions">
+            <a th:href="@{/api/v1/products}" class="btn btn-continue">
+                <i class="fas fa-arrow-left"></i>
+                Continue Shopping
+            </a>
+            <a th:href="@{/api/v1/orders}" class="btn btn-checkout">
+                Proceed to Checkout
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+   		function remove(productId) {
+   			fetch("/api/v1/cart?productId="+productId, {
+   				method: "DELETE"
+   			}).then(res => {
+   				console.log(res)
+   				window.location.reload();
+   			}).catch(err => {
+   				console.log(err);
+   			})
+   		}
+   		
+   		function increment(productId, quantity){
+   			console.log(productId + " " + quantity)
+   			quantity++;
+			fetch("/api/v1/cart?productId="+productId+"&quantity="+quantity, {
+				method: "PUT"
+			}).then(res => {
+				console.log(res);
+				window.location.reload();
+			}).catch(err => {
+				console.log(err)
+			})
+   		}
+   		
+   		const decrement = (productId, quantity) => {
+			if(quantity > 0){				
+				quantity--;
+			}
+			fetch("/api/v1/cart?productId="+productId+"&quantity="+quantity, {
+				method: "PUT"
+			}).then(res => {
+				console.log(res);
+				window.location.reload();
+			}).catch(err => {
+				console.log(err)
+			})
+   		}
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

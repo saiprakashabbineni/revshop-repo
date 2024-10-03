@@ -24,10 +24,11 @@ public class ProductService {
     private CategoryRepository categoryRepository;
 	
     @Autowired
-	private ProductRepository productRepository;
+	  private ProductRepository productRepository;
     
     @Autowired
     private SizeRepository sizeRepository;
+  
     @Autowired
     private SellerRepository sellerRepository;
     
@@ -35,53 +36,53 @@ public class ProductService {
         return categoryRepository.findAll();
     }
     
-    
     public void saveProduct(Product product) {
         productRepository.save(product);
     }
 
-	public Optional<Category> getCategoryById(int categoryId) {
+	  public Optional<Category> getCategoryById(int categoryId) {
 	        return categoryRepository.findById(categoryId);
-	    }
+    }
 
     public List<Size> getAllSizes(int categoryId) {
 	    	Optional<Category> category = categoryRepository.findById(categoryId);
 	        return sizeRepository.findByCategory(category);
-	    }
+    }
 
-	public Size getSizeById(int sizeId) {
+	  public Size getSizeById(int sizeId) {
 			// TODO Auto-generated method stub
 			return sizeRepository.getReferenceById(sizeId);
 			
-		}
+    }
 
-	public Product getProductDetails(int productId) {
+	  public Product getProductDetails(int productId) {
 			// TODO Auto-generated method stub
 			return productRepository.getReferenceById(productId);
 		}
 
-	public void deleteProduct(int productId) {
-		// TODO Auto-generated method stub
-		productRepository.deleteById(productId);
-	}
-	public List<Product> getAllProducts() {
-		return productRepository.findAll();
-	}
+    public void deleteProduct(int productId) {
+      // TODO Auto-generated method stub
+      productRepository.deleteById(productId);
+    }
 
-	public Product getProductById(int productId) {
-		// TODO Auto-generated method stub
-		return productRepository.findById(productId).get();	
-	}
-	
-	public Product findById(int id) {
-		Optional<Product> product = productRepository.findById(id);
-		if(product.isPresent()) {
-			return product.get();
-		}
-		else {
-			return null;
-		}	
-	}
+    public List<Product> getAllProducts() {
+      return productRepository.findAll();
+    }
+
+    public Product getProductById(int productId) {
+      // TODO Auto-generated method stub
+      return productRepository.findById(productId).get();	
+    }
+
+    public Product findById(int id) {
+      Optional<Product> product = productRepository.findById(id);
+      if(product.isPresent()) {
+        return product.get();
+      }
+      else {
+        return null;
+      }	
+    }
 	
 	public double getRating(int id) {
 		Optional<Product> product = productRepository.findById(id);

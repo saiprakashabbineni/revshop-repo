@@ -45,12 +45,31 @@ public class CartService {
         }
     }
 
+
     public List<Cart> getCartItemsByuserModel(UserModel userModel) {
         return cartRepository.findByUserModel(userModel);
     }
+  
     @Transactional
     public void clearCart(UserModel user) {
         cartRepository.deleteByUserModel(user);
     }
-    
+
+    public List<Cart> getCartItemsByuserModel(UserModel userModel) {
+      return cartRepository.findByUserModel(userModel);
+    }
+
+    public Cart findByUserAndProduct(int userId, int productId) {
+      Cart cart = cartRepository.findByUserModelUserIdAndProductProductId(userId, productId);
+      return cart;
+    }
+
+    public void deleteFromCart(Cart cart) {
+      cartRepository.delete(cart);
+    }
+
+    public void updateCart(Cart cart) {
+      cartRepository.save(cart);
+    }
 }
+
