@@ -1,18 +1,12 @@
 package com.project.revshop.controller;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +16,9 @@ import com.project.revshop.entity.Product;
 import com.project.revshop.entity.Size;
 import com.project.revshop.enums.Gender;
 import com.project.revshop.service.ProductService;
+import com.project.revshop.service.WishlistService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/api/v1")
@@ -29,6 +26,9 @@ public class FilterProductController {
     
     @Autowired
     private ProductService productService;
+    
+    @Autowired
+    private WishlistService wishlistService;
 
     @GetMapping("/allfetchedproducts")
     public String showFilteredProducts(
@@ -36,12 +36,12 @@ public class FilterProductController {
             @RequestParam(required = false) List<String> price,
             @RequestParam(required = false) List<Integer> category,
             @RequestParam(required = false) List<Integer> size,
+            HttpSession session,
             Model model) {
         
         List<Category> categories = productService.getAllCategories();
         model.addAttribute("categories", categories);
         
-        // Initialize the variables
         List<Integer> categoryId = category != null ? category : List.of();
         List<Integer> sizeId = size !=null ? size : List.of();
         
@@ -52,7 +52,6 @@ public class FilterProductController {
         double minPrice = 0.0;
         double maxPrice = Double.MAX_VALUE;
 
-        // Determine price range based on input
         if (price != null) {
             if (price.contains("under2000")) {
                 maxPrice = 2000.00;
@@ -94,7 +93,9 @@ public class FilterProductController {
         	fetchedProducts = productService.getProductsByPriceBetween(minPrice, maxPrice);
         }
         
-       
+        int userId = (int) session.getAttribute("userId");
+        List<Product> wishlistProducts = wishlistService.getWishlist(userId);
+        model.addAttribute("wishlistProducts", wishlistProducts);
         model.addAttribute("products", fetchedProducts);
         return "view001";
     }
@@ -102,18 +103,8 @@ public class FilterProductController {
     @GetMapping("/dynamicsizes")
 	@ResponseBody
 	public List<Size>  getSizesByCategory(@RequestParam("categoryId")  List<Integer> categoryIds,Model model) {
-
-    
-        System.out.println("dyanmicsizes: " + categoryIds);
-
         List<Size> sizes = productService.getSizesByCategory(categoryIds);
-        
-        
-        System.out.println("dyanmicgetapisizes: " + sizes);
-
         return sizes;
-        
-    
     }
 
 }

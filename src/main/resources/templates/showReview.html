@@ -11,6 +11,7 @@
 </head>
 
 <body>
+	<div th:include="@{/buyerNav.html}"></div>
 	<div class="container mt-5">
 		<h2 class="text-center">Product Review</h2>
 		<form th:action="@{/api/v1/reviews/{id}(id = ${productId})}" th:method="POST" th:object="${review}">
