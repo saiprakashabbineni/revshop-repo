@@ -77,6 +77,9 @@ public class Product {
     @OneToMany(mappedBy="product", cascade=CascadeType.ALL)
     private List<Wishlist> wishlist;
     
+    @OneToMany(mappedBy="product", cascade=CascadeType.ALL)
+    private List<OrderItem> orderItems;
+    
     @PrePersist
     protected void onCreate() {
         createdAt = Timestamp.valueOf(LocalDateTime.now());

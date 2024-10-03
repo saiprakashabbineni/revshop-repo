@@ -1,19 +1,13 @@
 package com.project.revshop.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,7 +16,6 @@ import com.project.revshop.entity.Category;
 import com.project.revshop.entity.Product;
 import com.project.revshop.entity.SellerModel;
 import com.project.revshop.entity.Size;
-import com.project.revshop.entity.UserModel;
 import com.project.revshop.service.ProductService;
 
 import jakarta.servlet.http.HttpSession;
@@ -59,13 +52,13 @@ public class AddProductController {
 	}
 	
 	@PostMapping("/update")
-	public String updateProductToInventory(@ModelAttribute Product product,Model model,@RequestParam("productId") int productId,HttpSession session) {
+	public String updateProductToInventory(@ModelAttribute Product product, Model model, @RequestParam("productId") int productId, HttpSession session) {
 		product.setProductId(productId);
 		int sellerid = (Integer) session.getAttribute("sellerid");
 		SellerModel sellerModel = productService.getSellerById(sellerid);
 		product.setSellerModel(sellerModel);
 		productService.saveProduct(product);
-		return "redirect:/api/v1/products";
+		return "redirect:/api/v1/seller/products";
 	}
 	
 	@PostMapping("/add")
@@ -79,17 +72,17 @@ public class AddProductController {
         }
 		product.setSellerModel(sellerModel);
 		productService.saveProduct(product);
-		return "redirect:/api/v1/products";
+		return "redirect:/api/v1/seller/products";
 	}
 	
-	@DeleteMapping("/delete")
-	public String deleteProuctFromInventory(@RequestParam("productId") int productId,HttpSession session) {
+	@PostMapping("/delete")
+	public String deleteProuctFromInventory(@RequestParam("productId") int productId, HttpSession session) {
 		int sellerid = (Integer) session.getAttribute("sellerid");
 		SellerModel sellerModel = productService.getSellerById(sellerid);
         if (sellerModel == null) {
             return "redirect:/api/v1/login";
         }
 		productService.deleteProduct(productId);
-		return "redirect:/api/v1/products";
+		return "redirect:/api/v1/seller/products";
 	}
 }

@@ -74,7 +74,7 @@ public class OrderController {
     	int userid = (Integer)session.getAttribute("userId");
     	UserModel user = userService.getUserId(userid);
         if (user == null) {
-            return "redirect:/api/v1login";
+            return "redirect:/api/v1/login";
         }
 
         List<Order> orders = orderService.getOrdersByUser(user);

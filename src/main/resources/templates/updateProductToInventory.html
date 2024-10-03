@@ -10,6 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+<div th:include="@{/sellerNav.html}"></div>
 <h1>Update Existing Product</h1>
 <form th:action="@{/api/v1/update}" th:object="${product}" method="post">
 	<input type="hidden" th:name = "productId" th:value = "${product.productId}">
