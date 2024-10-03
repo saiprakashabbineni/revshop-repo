@@ -1,5 +1,3 @@
-package com.project.revshop.service;
-
 import com.project.revshop.entity.Product;
 import com.project.revshop.entity.Wishlist;
 import com.project.revshop.repository.ProductRepository;
@@ -11,11 +9,11 @@ import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class WishlistService {
 
     @Autowired
@@ -33,7 +31,7 @@ public class WishlistService {
         }
 
         Wishlist wishlist = new Wishlist();
-        wishlist.setUser((User) userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found")));
+        wishlist.setUser(userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found")));
         wishlist.setProduct(productRepository.findById(productId).orElseThrow(() -> new IllegalArgumentException("Product not found")));
 
         wishlistRepository.save(wishlist);
@@ -47,10 +45,10 @@ public class WishlistService {
         wishlistRepository.delete(wishlist);
     }
 
-    public Set<Product> getWishlist(Integer userId) {
-        Set<Wishlist> wishlistItems = wishlistRepository.findByUserUserId(userId);
+    public List<Product> getWishlist(Integer userId) {
+        List<Wishlist> wishlistItems = wishlistRepository.findByUserUserId(userId);
         return wishlistItems.stream()
                 .map(Wishlist::getProduct)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 }

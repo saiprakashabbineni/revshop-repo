@@ -66,10 +66,21 @@
     <div class="row">
         <div th:each="product : ${products}" class="col-12 col-lg-4 mb-3 col-md-6 col-xl-3">
                 <div class="card product-card">
-                	<form id='form' th:action="@{/api/v1/wishlist/{id}(id=${product.productId})}" th:method="post">
-                    	<i class="bi bi-heart heart"></i>
-                    	
-                    </form>
+               		<div th:if="${!wishlistProducts.isEmpty()}">
+	                	<div th:each="wishlistProduct : ${wishlistProducts}">
+	                		<div th:if="${product.productId == wishlistProduct.productId}">
+	                			<button th:onclick="'remove(' + ${product.productId} + ')'"><i class="bi bi-heart-fill heart" style="color: red;"></i></button>	
+	                		</div>                	
+	                	</div>
+                	</div>
+               		<div th:unless="${!wishlistProducts.isEmpty()}">
+               			<form id='form' th:action="@{/api/v1/wishlist}" th:method="post">
+	                		<input type="hidden" th:name="productId" th:value="${product.productId}" />
+	                		<button type="submit"><i class="bi bi-heart heart"></i></button>	
+                   		</form>
+	                		
+               		</div>
+                	
 		            <a th:href="@{/api/v1/products/{id}(id=${product.productId})}" class="card-link">
 	                    <img th:src="@{${product.imageUrl}}" class="card-img-top card-image" alt="Product Image">
 	                    <div class="card-body">
@@ -104,9 +115,17 @@
         });
     }
     
-    function submit(){
-		document.getElementById('form').submit();
+    function remove(productId) {
+    	fetch("/api/v1/wishlist?productId="+productId, {
+	   		method: "DELETE"
+	   	}).then(res => {
+	   		console.log(res);
+	   		window.location.reload();
+	   	}).catch(err => {
+	   		console.log(err);
+	   	})
     }
+    
 </script>
 </body>
 </html>

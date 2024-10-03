@@ -30,9 +30,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productId;
     
-//    @ManyToOne
-//    @JoinColumn(name = "seller_id", nullable = false)
-//    private Seller seller;
+    @ManyToOne
+    @JoinColumn(name = "seller_id", nullable = false)
+    private SellerModel sellerModel;
     
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
@@ -72,7 +72,12 @@ public class Product {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
     
+
+    @OneToMany(mappedBy = "product", cascade=CascadeType.ALL)
+    private List<Review> reviews;
     
+    @OneToMany(mappedBy="product", cascade=CascadeType.ALL)
+    private List<Wishlist> wishlist;
     
     @PrePersist
     protected void onCreate() {
@@ -88,15 +93,15 @@ public class Product {
         this.productId = productId;
     }
 
-//    public Seller getSeller() {
-//        return seller;
-//    }
-//
-//    public void setSeller(Seller seller) {
-//        this.seller = seller;
-//    }
+    public SellerModel getSellerModel() {
+		return sellerModel;
+	}
 
-    public Category getCategory() {
+	public void setSellerModel(SellerModel sellerModel) {
+		this.sellerModel = sellerModel;
+	}
+
+	public Category getCategory() {
         return category;
     }
 
@@ -182,11 +187,6 @@ public class Product {
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
-    
-    @OneToMany(mappedBy = "product", cascade=CascadeType.ALL)
-    private List<Review> reviews;
-
-
 
 	public List<Review> getReviews() {
 		return reviews;
@@ -194,5 +194,13 @@ public class Product {
 
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
+	}
+
+	public List<Wishlist> getWishlist() {
+		return wishlist;
+	}
+
+	public void setWishlist(List<Wishlist> wishlist) {
+		this.wishlist = wishlist;
 	}
 }

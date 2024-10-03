@@ -5,6 +5,7 @@ import org.apache.catalina.User;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "favorites")
 public class Wishlist {
 
     @Id
@@ -12,11 +13,11 @@ public class Wishlist {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "user")
+    private UserModel user;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product")
     private Product product;
 
     // Getters and setters
@@ -28,11 +29,11 @@ public class Wishlist {
         this.id = id;
     }
 
-    public User getUser() {
+    public UserModel getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserModel user) {
         this.user = user;
     }
 

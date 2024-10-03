@@ -1,5 +1,7 @@
 package com.project.revshop.entity;
 
+import java.util.*;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -39,6 +41,9 @@ public class UserModel {
 
     @OneToOne(mappedBy = "usermodel", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private SellerModel sellermodel;
+    
+    @OneToMany(mappedBy = "user", cascade=CascadeType.ALL)
+    private List<Wishlist> wishlist;
 
     public UserModel() {
     }
