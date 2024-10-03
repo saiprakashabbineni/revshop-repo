@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .profile-card {
+            background-color: white;
+            width: 60%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: row;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .profile-card-left {
+            background-color: #007bff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            width: 40%;
+        }
+
+        .profile-card-left .profile-icon {
+            font-size: 120px;
+            color: white;
+        }
+
+        .profile-card-left h3 {
+            color: white;
+            margin-top: 20px;
+            font-size: 24px;
+        }
+
+        .profile-card-right {
+            width: 60%;
+            padding: 40px;
+        }
+
+        .profile-details {
+            margin-bottom: 20px;
+        }
+
+        .profile-details h2 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .profile-details p {
+            font-size: 18px;
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .profile-details p i {
+            color: #007bff;
+            margin-right: 10px;
+        }
+
+        .profile-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .profile-actions .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .profile-actions .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .profile-actions .btn.logout-btn {
+            background-color: #dc3545;
+        }
+
+        .profile-actions .btn.logout-btn:hover {
+            background-color: #c82333;
+        }
+
+        .profile-details p:not(:last-child) {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-card">
+        <!-- Left side: Profile icon and user name -->
+        <div class="profile-card-left">
+            <i class="fas fa-user-circle profile-icon"></i>
+            <h3 th:text="${user.userName}">User Name</h3>
+        </div>
+
+        <!-- Right side: Profile details -->
+        <div class="profile-card-right">
+            <div class="profile-details">
+                <h2>Profile Details</h2>
+                
+                <p><i class="fas fa-envelope"></i> <span th:text="${user.userEmail}">user@example.com</span></p>
+                <p><i class="fas fa-phone"></i> <span th:text="${user.userMobileNumber}">+1234567890</span></p>
+                <p><i class="fas fa-map-marker-alt"></i> <span th:text="${user.userAddress}">123 Street, City</span></p>
+                <p><i class="fas fa-user-tag"></i> <span th:text="${user.userRole}">User Role</span></p>
+            </div>
+
+            <!-- Edit and Logout buttons -->
+            <div class="profile-actions">
+                <a th:href="@{/api/v1/profile/edit}" class="btn">Edit Profile</a>
+                <a href="/api/v1/profile/logout" class="btn logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
