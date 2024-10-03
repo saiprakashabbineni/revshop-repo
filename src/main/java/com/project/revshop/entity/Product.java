@@ -1,11 +1,13 @@
 package com.project.revshop.entity;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.hibernate.annotations.Generated;
 
 import com.project.revshop.enums.Gender;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -15,6 +17,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -27,9 +30,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productId;
     
-//    @ManyToOne
-//    @JoinColumn(name = "seller_id", nullable = false)
-//    private Seller seller;
+    @ManyToOne
+    @JoinColumn(name = "seller_id", nullable = false)
+    private SellerModel sellerModel;
     
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
@@ -67,7 +70,12 @@ public class Product {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
     
+
+    @OneToMany(mappedBy = "product", cascade=CascadeType.ALL)
+    private List<Review> reviews;
     
+    @OneToMany(mappedBy="product", cascade=CascadeType.ALL)
+    private List<Wishlist> wishlist;
     
     @PrePersist
     protected void onCreate() {
@@ -83,15 +91,15 @@ public class Product {
         this.productId = productId;
     }
 
-//    public Seller getSeller() {
-//        return seller;
-//    }
-//
-//    public void setSeller(Seller seller) {
-//        this.seller = seller;
-//    }
+    public SellerModel getSellerModel() {
+		return sellerModel;
+	}
 
-    public Category getCategory() {
+	public void setSellerModel(SellerModel sellerModel) {
+		this.sellerModel = sellerModel;
+	}
+
+	public Category getCategory() {
         return category;
     }
 
@@ -186,4 +194,20 @@ public class Product {
 				+ ", thresholdQuantity=" + thresholdQuantity + ", createdAt=" + createdAt + "]";
 	}
     
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+
+	public List<Wishlist> getWishlist() {
+		return wishlist;
+	}
+
+	public void setWishlist(List<Wishlist> wishlist) {
+		this.wishlist = wishlist;
+	}
 }

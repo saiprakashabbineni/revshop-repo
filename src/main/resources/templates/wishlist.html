@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Wishlist</title>
+</head>
+
+<style>
+.empty-cart {
+    text-align: center;
+    padding: 50px;
+}
+.empty-cart h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.empty-cart-icon {
+    font-size: 6rem;
+    color: #ccc;
+    margin-bottom: 30px;
+}
+
+.empty-cart-img {
+    max-width: 350px;
+    margin-bottom: 20px;
+}
+</style>
+<body>
+	<div th:include="@{/buyerNav.html}"></div>
+    <div> 
+      	<div th:if="${!products.isEmpty()}">
+		    <table>   
+		        <tbody>
+		         	<h2>Products in Wishlist</h2>
+		         <thead>
+		             <tr>
+		                 <th>Product ID</th>
+		                 <th>Product Name</th>
+		                 <th>Action</th>
+		             </tr>
+		         </thead>
+		            <tr th:each="product : ${products}">
+		                <td th:text="${product.productId}"></td>
+		                <td th:text="${product.name}"></td>
+		                <td>
+	                        <button th:onclick="'remove('+ ${product.productId} + ')'">Remove from Wishlist</button>
+		                </td>
+		            </tr>
+		          </tbody>
+		  	</table>
+   		</div>
+        <div th:unless="${!products.isEmpty()}">
+           	<div class="container empty-cart">
+			<div class="empty-cart-icon">
+				<i class="fas fa-shopping-cart"></i>
+			</div>
+
+			<img src="https://cdn.dribbble.com/users/1010436/screenshots/13921028/dribble_shot_62_4x.jpg" alt="Empty Cart"
+				class="empty-cart-img">
+
+			<h1>Your Wishlist is Empty</h1>
+        </div>
+    </div>
+    
+    <script>
+    function remove(productId){    	
+		fetch("/api/v1/wishlist?productId="+productId, {
+	   		method: "DELETE"
+	   	}).then(res => {
+	   		console.log(res);
+	   		window.location.reload();
+	   	}).catch(err => {
+	   		console.log(err);
+	   	})
+    }
+    </script>
+</body>
+</html>
