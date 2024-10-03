@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Checkout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/checkOut.css}">
+    
+</head>
+<body>
+    <div class="container checkout-container">
+        <h1 class="mb-4">Secure Checkout</h1>
+        
+        <form th:action="@{/api/v1/orders/place}" method="post">
+            <div class="form-section">
+                <h2 class="mb-3">
+                    <i class="fas fa-shipping-fast me-2"></i>
+                    Shipping Address
+                </h2>
+                <textarea name="shippingAddress" class="form-control" rows="3" required 
+                    placeholder="Enter your shipping address..."></textarea>
+            </div>
+
+            <div class="form-section">
+                <h2 class="mb-3">
+                    <i class="fas fa-credit-card me-2"></i>
+                    Billing Address
+                </h2>
+                <textarea name="billingAddress" class="form-control" rows="3" required 
+                    placeholder="Enter your billing address..."></textarea>
+            </div>
+
+            <div class="order-summary">
+                <h2 class="mb-3">
+                    <i class="fas fa-shopping-cart me-2"></i>
+                    Order Summary
+                </h2>
+                <div class="order-items">
+                    <div class="order-item" th:each="item : ${cartItems}">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <span th:text="${item.product.name}" class="fw-bold"></span>
+                            </div>
+                            <div class="col-3">
+                                Qty: <span th:text="${item.quantity}"></span>
+                            </div>
+                            <div class="col-3 text-end">
+                                $<span th:text="${item.product.discountPrice}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="total-amount text-end">
+                    Total: $<span th:text="${total}"></span>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn-place-order">
+                    <i class="fas fa-lock me-2"></i>
+                    Place Order Securely
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

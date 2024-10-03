@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 :root {
     --primary-color: #4CAF50 !important;
     --secondary-color: #45a049 !important;
@@ -216,3 +218,4 @@ body {
         justify-content: center;
     }
 }
+
