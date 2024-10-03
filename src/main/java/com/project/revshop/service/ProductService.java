@@ -151,5 +151,9 @@ public class ProductService {
 		// TODO Auto-generated method stub
 		return productRepository.findByGenderInAndCategory_CategoryIdInAndSize_SizeIdIn(selectedGenders, categoryId, sizeId);
 	}
+
+	public Product getAllProductsById(Integer orderId) {
+		return productRepository.findById(orderId).get();
+	}
 } 
 

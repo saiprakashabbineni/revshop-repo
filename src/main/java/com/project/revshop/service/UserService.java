@@ -42,4 +42,8 @@ public class UserService {
 		// TODO Auto-generated method stub
 		return userRepository.findByUserId(userId);
 	}
+	
+	public void updateUserProfile(UserModel user) {
+		userRepository.save(user);
+	}
 }

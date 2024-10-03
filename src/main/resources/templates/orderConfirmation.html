@@ -8,6 +8,7 @@
 
 </head>
 <body>
+	<div th:include="@{/buyerNav.html}"></div>
     <div class="container confirmation-container">
         <div class="success-header">
             <i class="fas fa-check-circle success-icon"></i>
@@ -67,6 +68,9 @@
         <div class="text-center">
             <a href="/api/v1/products" class="continue-shopping-btn">
                 <i class="fas fa-shopping-cart me-2"></i>Continue Shopping
+            </a>
+            <a href="/api/v1/feedback" class="continue-shopping-btn">
+                <i class="fas fa-shopping-cart me-2"></i>Feedback
             </a>
         </div>
     </div>

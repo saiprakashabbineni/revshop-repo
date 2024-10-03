@@ -14,7 +14,6 @@
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
-            padding: 2rem;
         }
 
         h1 {
@@ -142,6 +141,7 @@
     </style>
 </head>
 <body>
+	<div th:include="@{/buyerNav.html}"></div>
     <h1 class="animate__animated animate__fadeInDown">Order History</h1>
     <div class="container">
         <table>
@@ -151,6 +151,7 @@
                     <th>Order Date</th>
                     <th>Total Amount</th>
                     <th>Status</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -163,6 +164,7 @@
                               th:class="'status-badge ' + 'status-' + ${#strings.toLowerCase(order.orderStatus)}">
                         </span>
                     </td>
+                    <td><a th:href="@{'/api/v1/orders/details?orderId=' + ${order.orderId}}" class="btn btn-outline-primary">Order Details</a></td>
                 </tr>
             </tbody>
         </table>
