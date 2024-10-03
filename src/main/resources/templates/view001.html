@@ -21,48 +21,66 @@
     <div class="row justify-content-center">
         <div class="left-filter collapse d-md-block" id="filterSidebar">
             <h5>Gender</h5>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="maleCheck">
-                <label class="form-check-label" for="maleCheck">Male</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="femaleCheck">
-                <label class="form-check-label" for="femaleCheck">Female</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="unisexCheck">
-                <label class="form-check-label" for="unisexCheck">Unisex</label>
-            </div>
+          <form action="#" th:action="@{/api/v1/allfetchedproducts}" method="get" id="filterForm">
+            
+           <div class="form-check">
+						<input class="form-check-input" type="checkbox" name="gender" id="male" th:name="gender" value="Male" >
+                            <label for="male">Male</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="gender" id="female" th:name="gender" value="Female" >
+                            <label for="female">Female</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="gender" id="unisex" th:name="gender" value="Other" >
+                            <label for="unisex">Unisex</label>
+                        </div>
 
             <h5 class="mt-4">Shop By Price</h5>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="under2000Check">
-                <label class="form-check-label" for="under2000Check">Under ₹ 2000</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="range2000to3500Check">
-                <label class="form-check-label" for="range2000to3500Check">₹ 2000 - ₹ 3500</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="range3500to6000Check">
-                <label class="form-check-label" for="range3500to6000Check">₹ 3500 - ₹ 6000</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="above6000Check">
-                <label class="form-check-label" for="above6000Check">₹ 6000+</label>
-            </div>
+            <input class="form-check-input" type="checkbox" th:name="price" value="under2000" id="priceUnder2000">
+                        <label for="">Under ₹ 2000</label>
+                    </div>
+                    <div class="form-check">
+            <input class="form-check-input" type="checkbox" th:name="price" value="2000to3500" id="price2000to3500">
+                        <label for="">₹ 2000 - ₹ 3500</label>
+                    </div>
+                    <div class="form-check">
+            <input class="form-check-input" type="checkbox" th:name="price" value="3500to6000" id="price3500to6000">
+                        <label for="">₹ 3500 - ₹ 6000</label>
+                    </div>
+                    <div class="form-check">
+            <input class="form-check-input" type="checkbox" th:name="price" value="above6000" id="priceAbove6000">
+                        <label for="">₹ 6000+</label>
+                    </div>
 
-            <h5 class="mt-4">Colors</h5>
-            <div class="d-flex flex-wrap color-options">
-                <div class="color-circle" style="background-color: red;"></div>
-                <div class="color-circle" style="background-color: blue;"></div>
-                <div class="color-circle" style="background-color: green;"></div>
-                <div class="color-circle" style="background-color: yellow;"></div>
-                <div class="color-circle" style="background-color: black;"></div>
+         
+            
+             <h5 class="mt-4">Categories</h5>
+            
+             <div class="form-check" th:each="c : ${categories}">
+				<input class="form-check-input" type="checkbox" th:name="category" th:value="${c.categoryId}">
+                <label class="form-check-label" for="Tshirts" th:text="${c.categoryName} "></label>
             </div>
+            
+         		 <h5 class="mt-4">Sizes</h5>		
+				<div id="sizeOptions" class="form-check">
+						</div>
+          
+            
+            
+              <button type="button" class="btn btn-primary" onclick="submitForm()">Apply Filters</button>
+		
+		</form>
         </div>
-
+		
+		 
+		
+		
         <div class="col-12 col-lg-10 col-sm-9 products">
+           <div class="alert alert-warning" th:if="${errorMessage}">
+        <p th:text="${errorMessage}"></p>
+    </div>
     <div class="row">
         <div th:each="product : ${products}" class="col-12 col-lg-4 mb-3 col-md-6 col-xl-3">
                 <div class="card product-card">
@@ -127,5 +145,57 @@
     }
     
 </script>
+ <script>
+        function submitForm() {
+            document.getElementById("filterForm").submit();
+        }
+    </script>
+    
+    <script>
+    
+    document.querySelectorAll('input[name="category"]').forEach(function(categoryCheckbox) {
+        categoryCheckbox.addEventListener('change', function() {
+            const selectedCategories = Array.from(document.querySelectorAll('input[name="category"]:checked'))
+                .map(checkbox => checkbox.value);
+            fetchSizesForCategory(selectedCategories);
+        });
+    });
+		
+    function fetchSizesForCategory(selectedCategories) {
+        // Make an AJAX request to fetch sizes based on selected categories
+const url = `/api/v1/dynamicsizes?categoryId=${selectedCategories.join('&categoryId=')}`;
+
+        // Sending the selected categories as parameters
+        fetch(url, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+        	console.log(data);
+            updateSizeOptions(data);  // 'sizes' should be the array returned from the server
+        })
+        .catch(error => console.error('Error fetching sizes:', error));
+    }
+
+    function updateSizeOptions(sizes) {
+        const sizeOptionsContainer = document.getElementById('sizeOptions');
+        sizeOptionsContainer.innerHTML = '';  // Clear any existing options
+
+        // Dynamically insert new size options
+        sizes.forEach(size => {
+            const sizeCheckbox = `
+                <div class="form-check">
+				<input class="form-check-input" type="checkbox" name="size" value= ${size.sizeId}>
+                    <label class="form-check-label">${size.sizeName}</label>
+                </div>
+            `;
+            sizeOptionsContainer.insertAdjacentHTML('beforeend', sizeCheckbox);
+        });
+    }
+
+    </script>
 </body>
 </html>

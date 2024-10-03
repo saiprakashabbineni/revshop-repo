@@ -55,10 +55,6 @@ public class CartService {
         cartRepository.deleteByUserModel(user);
     }
 
-    public List<Cart> getCartItemsByuserModel(UserModel userModel) {
-      return cartRepository.findByUserModel(userModel);
-    }
-
     public Cart findByUserAndProduct(int userId, int productId) {
       Cart cart = cartRepository.findByUserModelUserIdAndProductProductId(userId, productId);
       return cart;

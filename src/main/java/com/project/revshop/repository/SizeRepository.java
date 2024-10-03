@@ -12,5 +12,8 @@ import com.project.revshop.entity.Size;
 @Repository
 public interface SizeRepository extends JpaRepository<Size, Integer> {
 	List<Size> findByCategory(Optional<Category> category);
+	
+    List<Size> findByCategory_CategoryIdIn(List<Integer> categoryId);
+
 }
 
