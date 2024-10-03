@@ -51,4 +51,11 @@ public class Size {
         this.category = category;
     }
     // Getters and setters
+
+	@Override
+	public String toString() {
+		return "Size [sizeId=" + sizeId + ", sizeName=" + sizeName + ",]";
+	}
+    
+    
 }

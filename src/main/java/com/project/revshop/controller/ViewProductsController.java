@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.project.revshop.entity.Category;
 import com.project.revshop.entity.Product;
 import com.project.revshop.service.ProductService;
 
@@ -28,6 +29,13 @@ public class ViewProductsController {
 	@GetMapping("/api/v1/products")
 	public String viewProductsPage(Model model) {
 		List<Product> products = productService.getAllProducts();
+		
+		List<Category> categories= productService.getAllCategories();
+		
+		System.out.println("getched cat" + categories);
+		
+		model.addAttribute("categories",categories);
+		
 		model.addAttribute("products", products);
 		return "view001";
 	}

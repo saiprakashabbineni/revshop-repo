@@ -48,4 +48,11 @@ public class Category {
 	    public void setSizes(List<Size> sizes) {
 	        this.sizes = sizes;
 	    }
+
+		@Override
+		public String toString() {
+			return "Category [categoryId=" + categoryId + ", categoryName=" + categoryName + ", sizes=" + sizes + "]";
+		}
+	    
+	    
 }
