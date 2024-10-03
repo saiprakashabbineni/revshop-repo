@@ -10,6 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+<div th:include="@{/sellerNav.html}"></div>
 <h1>Add New Product</h1>
 <form th:action="@{/api/v1/add}" th:object="${Product}" method="post">
     <label for="name">Product Name:</label>
