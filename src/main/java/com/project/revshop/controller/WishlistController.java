@@ -1,27 +1,44 @@
 package com.project.revshop.controller;
 
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.web.bind.annotation.*;
-//
-//import com.project.revshop.repository.WishlistRepository;
+import java.util.List;
 
-//@RestController
-//@RequestMapping("/api/v1/wishlist")
-//public class WishlistController {
-//
-//    @Autowired
-//    private WishlistRepository wishlistService;
-//
-//    @PostMapping
-//    public String addToWishlist(@RequestParam Long userId, @RequestParam Long productId) {
-//        wishlistService.addToWishlist(userId, productId);
-//        return "wishlist";
-//    }
-//
-//    @DeleteMapping
-//    public String removeFromWishlist(@RequestParam Long userId, @RequestParam Long productId) {
-//        wishlistService.removeFromWishlist(userId, productId);
-//        return "wishlist";
-//    }
-//}
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import com.project.revshop.entity.Product;
+import com.project.revshop.service.WishlistService;
+
+import jakarta.servlet.http.HttpSession;
+
+@Controller
+@RequestMapping("/api/v1/wishlist")
+public class WishlistController {
+
+    @Autowired
+    private WishlistService wishlistService;
+    
+    @GetMapping
+    public String showWishlist(HttpSession session, Model model) {
+    	Integer userId = (Integer) session.getAttribute("userId");
+    	List<Product> products = wishlistService.getWishlist(userId);
+    	model.addAttribute("products", products);
+    	return "wishlist";
+    }
+
+    @PostMapping
+    public String addToWishlist(HttpSession session, @RequestParam Integer productId) {
+    	Integer userId = (Integer) session.getAttribute("userId");
+        wishlistService.addToWishlist(userId, productId);
+        return "redirect:/api/v1/wishlist";
+    }
+
+    @DeleteMapping
+    public String removeFromWishlist(HttpSession session, @RequestParam Integer productId) {
+    	Integer userId = (Integer) session.getAttribute("userId");
+        wishlistService.removeFromWishlist(userId, productId);
+        return "redirect:/api/v1/wishlist";
+    }
+}
 
