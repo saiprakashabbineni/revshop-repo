@@ -54,7 +54,7 @@ public class CartController {
     	return "showCart";
     }
     
-    @DeleteMapping
+    @PostMapping("/delete")
     public String deleteFromCart(HttpSession session, @RequestParam("productId") Integer productId) {
     	Integer userId = (Integer) session.getAttribute("userId");
     	Cart cart = cartService.findByUserAndProduct(userId, productId);
@@ -62,7 +62,7 @@ public class CartController {
     	return "redirect:/api/v1/cart";
     }
     
-    @PutMapping
+    @PostMapping("/update")
     public String updateQuantity(HttpSession session, @RequestParam("productId") Integer productId, @RequestParam("quantity") Integer quantity) {
     	Integer userId = (Integer) session.getAttribute("userId");
     	Cart cart = cartService.findByUserAndProduct(userId, productId);
