@@ -54,7 +54,7 @@ public class CartController {
     	return "showCart";
     }
     
-    @DeleteMapping
+    @PostMapping("/delete")
     public String deleteFromCart(HttpSession session, @RequestParam("productId") Integer productId) {
     	Integer userId = (Integer) session.getAttribute("userId");
     	Cart cart = cartService.findByUserAndProduct(userId, productId);
