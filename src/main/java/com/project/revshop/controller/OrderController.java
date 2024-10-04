@@ -6,12 +6,15 @@ import com.project.revshop.entity.SellerModel;
 import com.project.revshop.entity.Cart;
 import com.project.revshop.entity.UserModel;
 import com.project.revshop.service.CartService;
+import com.project.revshop.service.EmailService;
 import com.project.revshop.service.OrderService;
 import com.project.revshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
@@ -27,6 +30,9 @@ public class OrderController {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private EmailService emailService;
     
     @GetMapping
     public String checkOut(Model model,HttpSession session) {
@@ -60,9 +66,14 @@ public class OrderController {
             model.addAttribute("error", "Your cart is empty");
             return "checkOut";
         }
-
+        
         Order order = orderService.createOrder(user, cartItems, shippingAddress, billingAddress);
         cartService.clearCart(user);
+        try {
+			emailService.sendOTPMessage(user.getUserEmail(), "Placed an order", "Your order has been placed");
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
         List<OrderItem> orderItem = orderService.getOrderItemsByOrder(order);
         model.addAttribute("orderItem", orderItem);
         model.addAttribute("order", order);
