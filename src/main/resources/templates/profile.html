@@ -5,7 +5,7 @@
     <title>Profile</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
+         .profile {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f2f5;
             margin: 0;
@@ -13,8 +13,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-        }
+            height: 88vh;
+        } 
 
         .profile-card {
             background-color: white;
@@ -111,32 +111,33 @@
     </style>
 </head>
 <body>
-
-    <div class="profile-card">
-        <!-- Left side: Profile icon and user name -->
-        <div class="profile-card-left">
-            <i class="fas fa-user-circle profile-icon"></i>
-            <h3 th:text="${user.userName}">User Name</h3>
-        </div>
-
-        <!-- Right side: Profile details -->
-        <div class="profile-card-right">
-            <div class="profile-details">
-                <h2>Profile Details</h2>
-                
-                <p><i class="fas fa-envelope"></i> <span th:text="${user.userEmail}">user@example.com</span></p>
-                <p><i class="fas fa-phone"></i> <span th:text="${user.userMobileNumber}">+1234567890</span></p>
-                <p><i class="fas fa-map-marker-alt"></i> <span th:text="${user.userAddress}">123 Street, City</span></p>
-                <p><i class="fas fa-user-tag"></i> <span th:text="${user.userRole}">User Role</span></p>
-            </div>
-
-            <!-- Edit and Logout buttons -->
-            <div class="profile-actions">
-                <a th:href="@{/api/v1/profile/edit}" class="btn">Edit Profile</a>
-                <a href="/api/v1/profile/logout" class="btn logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
-            </div>
-        </div>
-    </div>
-
+	<div th:include="@{/buyerNav.html}"></div>
+	<div class="profile">
+	    <div class="profile-card">
+	        <!-- Left side: Profile icon and user name -->
+	        <div class="profile-card-left">
+	            <i class="fas fa-user-circle profile-icon"></i>
+	            <h3 th:text="${user.userName}">User Name</h3>
+	        </div>
+	
+	        <!-- Right side: Profile details -->
+	        <div class="profile-card-right">
+	            <div class="profile-details">
+	                <h2>Profile Details</h2>
+	                
+	                <p><i class="fas fa-envelope"></i> <span th:text="${user.userEmail}">user@example.com</span></p>
+	                <p><i class="fas fa-phone"></i> <span th:text="${user.userMobileNumber}">+1234567890</span></p>
+	                <p><i class="fas fa-map-marker-alt"></i> <span th:text="${user.userAddress}">123 Street, City</span></p>
+	                <p><i class="fas fa-user-tag"></i> <span th:text="${user.userRole}">User Role</span></p>
+	            </div>
+	
+	            <!-- Edit and Logout buttons -->
+	            <div class="profile-actions">
+	                <a th:href="@{/api/v1/profile/edit}" class="btn">Edit Profile</a>
+	                <a href="/api/v1/profile/logout" class="btn logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 </body>
 </html>
