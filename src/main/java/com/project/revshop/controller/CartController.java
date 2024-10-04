@@ -62,7 +62,7 @@ public class CartController {
     	return "redirect:/api/v1/cart";
     }
     
-    @PostMapping("/update")
+    @PutMapping
     public String updateQuantity(HttpSession session, @RequestParam("productId") Integer productId, @RequestParam("quantity") Integer quantity) {
     	Integer userId = (Integer) session.getAttribute("userId");
     	Cart cart = cartService.findByUserAndProduct(userId, productId);
