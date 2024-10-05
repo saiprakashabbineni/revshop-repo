@@ -40,6 +40,7 @@ public class OrderController {
         for (Cart ct : cartItems) {
             total += (ct.getQuantity() * ct.getProduct().getDiscountPrice());
         }
+        model.addAttribute("wallet",userModel.getWalletBalance());
         model.addAttribute("total", total);
         model.addAttribute("cartItems", cartItems);
         return "checkOut";
@@ -50,9 +51,6 @@ public class OrderController {
                              @RequestParam String billingAddress, 
                              HttpSession session, 
                              Model model) {
-        // Debug logging
-        System.out.println("Shipping Address: " + shippingAddress);
-        System.out.println("Billing Address: " + billingAddress);
 
         int userid = (Integer) session.getAttribute("userId");
         UserModel user = userService.getUserId(userid);
