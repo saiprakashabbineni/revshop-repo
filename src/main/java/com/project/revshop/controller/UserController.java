@@ -36,6 +36,7 @@ public class UserController {
             SellerModel seller = userModel.getSellermodel();
             if (seller != null) {
                 seller.setUsermodel(userModel);
+                userModel.setWalletBalance(5500.0);
                 UserModel savedUser = userService.saveUser(userModel);
                 seller.setUsermodel(savedUser); 
                 userService.saveSeller(seller);

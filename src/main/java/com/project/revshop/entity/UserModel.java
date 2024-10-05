@@ -37,7 +37,11 @@ public class UserModel {
     @NotNull(message = "Mobile number is required.")
     @Pattern(regexp = "^(\\+\\d{1,3})?\\d{10}$", message = "Mobile number must be valid (e.g., +91XXXXXXXXXX or XXXXXXXXXX)")
     @Column(unique=true)
-    private String  userMobileNumber;
+    private String userMobileNumber;
+
+    // New field for wallet balance
+    @NotNull(message = "Wallet balance is required.")
+    private Double walletBalance;
 
     @OneToOne(mappedBy = "usermodel", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private SellerModel sellermodel;
@@ -46,6 +50,7 @@ public class UserModel {
     private List<Wishlist> wishlist;
 
     public UserModel() {
+        this.walletBalance = 0.0; // Initialize wallet balance to 0
     }
 
     public UserModel(String userName, String userEmail, String userPassword, String userRole, String userAddress, String userMobileNumber) {
@@ -55,8 +60,10 @@ public class UserModel {
         this.userRole = userRole;
         this.userAddress = userAddress;
         this.userMobileNumber = userMobileNumber;
+        this.walletBalance = 0.0; // Initialize wallet balance to 0
     }
 
+    // Getters and Setters
     public Integer getUserId() {
         return userId;
     }
@@ -105,12 +112,20 @@ public class UserModel {
         this.userAddress = userAddress;
     }
 
-	public String getUserMobileNumber() {
+    public String getUserMobileNumber() {
         return userMobileNumber;
     }
 
     public void setUserMobileNumber(String userMobileNumber) {
         this.userMobileNumber = userMobileNumber;
+    }
+
+    public Double getWalletBalance() {
+        return walletBalance;
+    }
+
+    public void setWalletBalance(Double walletBalance) {
+        this.walletBalance = walletBalance;
     }
 
     public SellerModel getSellermodel() {
@@ -122,9 +137,9 @@ public class UserModel {
     }
     
     @Override
- 	public String toString() {
- 		return "UserModel [userId=" + userId + ", userName=" + userName + ", userEmail=" + userEmail + ", userPassword="
- 				+ userPassword + ", userRole=" + userRole + ", userAddress=" + userAddress + ", userMobileNumber="
- 				+ userMobileNumber + ", sellermodel=" + sellermodel + "]";
- 	}
+    public String toString() {
+        return "UserModel [userId=" + userId + ", userName=" + userName + ", userEmail=" + userEmail + ", userPassword="
+                + userPassword + ", userRole=" + userRole + ", userAddress=" + userAddress + ", userMobileNumber="
+                + userMobileNumber + ", walletBalance=" + walletBalance + ", sellermodel=" + sellermodel + "]";
+    }
 }

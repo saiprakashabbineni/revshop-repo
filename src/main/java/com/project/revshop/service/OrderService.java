@@ -1,9 +1,6 @@
 package com.project.revshop.service;
 
-import com.project.revshop.entity.Order;
-import com.project.revshop.entity.OrderItem;
-import com.project.revshop.entity.Cart;
-import com.project.revshop.entity.UserModel;
+import com.project.revshop.entity.*;
 import com.project.revshop.repository.OrderRepository;
 import com.project.revshop.repository.OrderItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +19,6 @@ public class OrderService {
 
     @Autowired
     private OrderItemRepository orderItemRepository;
-
 
     public Order createOrder(UserModel user, List<Cart> cartItems, String shippingAddress, String billingAddress) {
         Order order = createOrderEntity(user, cartItems, shippingAddress, billingAddress);
@@ -67,19 +63,21 @@ public class OrderService {
         return orderRepository.findByUserModelOrderByOrderDateDesc(user);
     }
 
-	public List<OrderItem> getOrderItemsByOrder(Order order) {
-		// TODO Auto-generated method stub
-		return orderItemRepository.findByOrder(order);
-	}
+    public List<OrderItem> getOrderItemsByOrder(Order order) {
+        return orderItemRepository.findByOrder(order);
+    }
 
-	public List<Order> getOrdersForSeller() {
-		// TODO Auto-generated method stub
-		return orderRepository.findAll();
-	}
+    public List<Order> getOrdersForSeller() {
+        return orderRepository.findAll();
+    }
 
-	public Order getOrderById(int id) {
-		// TODO Auto-generated method stub
-		return orderRepository.findById(id).get();
-	}
-	
+    public Order getOrderById(int id) {
+        return orderRepository.findById(id).orElse(null);
+    }
+    
+    @Transactional
+    public void updateOrderStatus(Order order, Order.OrderStatus status) {
+        order.setOrderStatus(status);
+        orderRepository.save(order);
+    }
 }
