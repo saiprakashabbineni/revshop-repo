@@ -1,0 +1,181 @@
+package com.revshop.userservice.controllertest;
+
+import com.revshop.userservice.controller.LoginController;
+import com.revshop.userservice.dto.LoginResponse;
+import com.revshop.userservice.entity.LoginModel;
+import com.revshop.userservice.entity.SellerModel;
+import com.revshop.userservice.entity.UserModel;
+import com.revshop.userservice.service.UserService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
+class LoginControllerTest {
+
+    @InjectMocks
+    private LoginController loginController;
+
+    @Mock
+    private UserService userService;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void testProcessLogin_InvalidEmail() {
+    
+        LoginModel loginModel = new LoginModel();
+        loginModel.setUserEmail("invalid@example.com");
+        when(userService.findByEmail("invalid@example.com")).thenReturn(null);
+
+    
+        ResponseEntity<?> response = loginController.processLogin(loginModel);
+
+       
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Invalid email. Please try again.", response.getBody());
+        verify(userService, times(1)).findByEmail("invalid@example.com");
+        verify(userService, never()).isPasswordCorrect(any(UserModel.class), anyString());
+    }
+
+    @Test
+    void testProcessLogin_IncorrectPassword() {
+        
+        UserModel userModel = new UserModel();
+        userModel.setUserEmail("user@example.com");
+
+        LoginModel loginModel = new LoginModel();
+        loginModel.setUserEmail("user@example.com");
+        loginModel.setUserPassword("wrongPassword");
+
+        when(userService.findByEmail("user@example.com")).thenReturn(userModel);
+        when(userService.isPasswordCorrect(userModel, "wrongPassword")).thenReturn(false);
+
+       
+        ResponseEntity<?> response = loginController.processLogin(loginModel);
+
+       
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Incorrect password. Please try again.", response.getBody());
+        verify(userService, times(1)).findByEmail("user@example.com");
+        verify(userService, times(1)).isPasswordCorrect(userModel, "wrongPassword");
+    }
+
+    @Test
+    void testProcessLogin_BuyerLogin() {
+       
+        UserModel userModel = new UserModel();
+        userModel.setUserRole("buyer");
+        userModel.setUserId(1);
+
+        LoginModel loginModel = new LoginModel();
+        loginModel.setUserEmail("buyer@example.com");
+        loginModel.setUserPassword("password");
+
+        when(userService.findByEmail("buyer@example.com")).thenReturn(userModel);
+        when(userService.isPasswordCorrect(userModel, "password")).thenReturn(true);
+
+      
+        ResponseEntity<?> response = loginController.processLogin(loginModel);
+
+        
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        LoginResponse responseBody = (LoginResponse) response.getBody();
+        assertEquals(1, responseBody.getId());
+        assertEquals("buyer", responseBody.getRole());
+        verify(userService, times(1)).findByEmail("buyer@example.com");
+        verify(userService, times(1)).isPasswordCorrect(userModel, "password");
+        verify(userService, never()).getSellerId(anyInt());
+    }
+
+    @Test
+    void testProcessLogin_SellerLogin_Success() {
+      
+        UserModel userModel = new UserModel();
+        userModel.setUserRole("seller");
+        userModel.setUserId(2);
+
+        LoginModel loginModel = new LoginModel();
+        loginModel.setUserEmail("seller@example.com");
+        loginModel.setUserPassword("password");
+
+        SellerModel sellerModel = new SellerModel();
+        sellerModel.setSellerId(1);
+
+        when(userService.findByEmail("seller@example.com")).thenReturn(userModel);
+        when(userService.isPasswordCorrect(userModel, "password")).thenReturn(true);
+        when(userService.getSellerId(2)).thenReturn(sellerModel);
+
+     
+        ResponseEntity<?> response = loginController.processLogin(loginModel);
+
+    
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        LoginResponse responseBody = (LoginResponse) response.getBody();
+        assertEquals(2, responseBody.getId());
+        assertEquals("seller", responseBody.getRole());
+        verify(userService, times(1)).findByEmail("seller@example.com");
+        verify(userService, times(1)).isPasswordCorrect(userModel, "password");
+        verify(userService, times(1)).getSellerId(2);
+    }
+
+    @Test
+    void testProcessLogin_SellerLogin_NoSellerAccount() {
+     
+        UserModel userModel = new UserModel();
+        userModel.setUserRole("seller");
+        userModel.setUserId(2);
+
+        LoginModel loginModel = new LoginModel();
+        loginModel.setUserEmail("seller@example.com");
+        loginModel.setUserPassword("password");
+
+        when(userService.findByEmail("seller@example.com")).thenReturn(userModel);
+        when(userService.isPasswordCorrect(userModel, "password")).thenReturn(true);
+        when(userService.getSellerId(2)).thenReturn(null);
+
+     
+        ResponseEntity<?> response = loginController.processLogin(loginModel);
+
+     
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("No seller account found for this user.", response.getBody());
+        verify(userService, times(1)).findByEmail("seller@example.com");
+        verify(userService, times(1)).isPasswordCorrect(userModel, "password");
+        verify(userService, times(1)).getSellerId(2);
+    }
+
+    @Test
+    void testProcessLogin_UnknownUserRole() {
+       
+        UserModel userModel = new UserModel();
+        userModel.setUserRole("admin"); // Unknown role
+        userModel.setUserId(3);
+
+        LoginModel loginModel = new LoginModel();
+        loginModel.setUserEmail("admin@example.com");
+        loginModel.setUserPassword("password");
+
+        when(userService.findByEmail("admin@example.com")).thenReturn(userModel);
+        when(userService.isPasswordCorrect(userModel, "password")).thenReturn(true);
+
+     
+        ResponseEntity<?> response = loginController.processLogin(loginModel);
+
+       
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Unknown user role.", response.getBody());
+        verify(userService, times(1)).findByEmail("admin@example.com");
+        verify(userService, times(1)).isPasswordCorrect(userModel, "password");
+        verify(userService, never()).getSellerId(anyInt());
+    }
+}

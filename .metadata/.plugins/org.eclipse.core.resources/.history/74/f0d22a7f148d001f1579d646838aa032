@@ -1,0 +1,85 @@
+package com.revshop.userservice.controllertest;
+
+import com.revshop.userservice.controller.UserController;
+import com.revshop.userservice.entity.SellerModel;
+import com.revshop.userservice.entity.UserModel;
+import com.revshop.userservice.service.UserService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
+class UserControllerTest {
+
+    @InjectMocks
+    private UserController userController;
+
+    @Mock
+    private UserService userService;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void testProcessRegistration_whenUserIsSeller_andSellerDetailsAreValid() {
+        // Arrange
+        UserModel userModel = new UserModel();
+        userModel.setUserRole("seller");
+
+        SellerModel sellerModel = new SellerModel();
+        userModel.setSellermodel(sellerModel);
+
+        when(userService.saveUser(any(UserModel.class))).thenReturn(userModel);
+
+        // Act
+        ResponseEntity<String> response = userController.processRegistration(userModel);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("User registred successfully", response.getBody());
+        verify(userService, times(1)).saveUser(userModel);
+        verify(userService, times(1)).saveSeller(sellerModel);
+    }
+
+    @Test
+    void testProcessRegistration_whenUserIsSeller_andSellerDetailsAreMissing() {
+        // Arrange
+        UserModel userModel = new UserModel();
+        userModel.setUserRole("seller");
+        userModel.setSellermodel(null); // Missing seller details
+
+        // Act
+        ResponseEntity<String> response = userController.processRegistration(userModel);
+
+        // Assert
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("", response.getBody());
+        verify(userService, never()).saveUser(any(UserModel.class));
+        verify(userService, never()).saveSeller(any(SellerModel.class));
+    }
+
+    @Test
+    void testProcessRegistration_whenUserIsNotSeller() {
+        // Arrange
+        UserModel userModel = new UserModel();
+        userModel.setUserRole("buyer"); // Non-seller user
+
+        // Act
+        ResponseEntity<String> response = userController.processRegistration(userModel);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("User registred successfully", response.getBody());
+        assertEquals(5500.0, userModel.getWalletBalance());
+        verify(userService, times(1)).saveUser(userModel);
+        verify(userService, never()).saveSeller(any(SellerModel.class));
+    }
+}
